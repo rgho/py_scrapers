@@ -1,6 +1,10 @@
 from bs4 import BeautifulSoup
 import urllib2
 import string
+import json
+
+
+
 
 
 
@@ -25,11 +29,33 @@ def scrapeData():
 		if ('#' in line) != True:#removes duplicates sibling a tags.
 			# GRAB LINE DATA AND PARSE
 			data = line.replace('<a href="/','').replace('</a>','').split('">')
-			names.append(data[0])
-			hexs.append(data[1])
+			hexs.append(data[0])
+			names.append(data[1])
 	
-	print names
+	#print names
 	print hexs
+
+	# LOOP AND BUILD A DICT
+	output = {}
+	for index in range(len(hexs)):
+		output[hexs[index]] = names[index]
+	#SAVE DICT AS JSON
+	save_as_json(output,'hex-human-colors.txt')
+
+
+
+def dict_to_json(my_dict):
+    return json.dumps(my_dict)
+
+def write_to_file(filename, data):
+    target = open(filename, 'w')
+    target.write(str(data))
+    target.close
+    return True
+
+def save_as_json(knowledge_dict, filename):
+    write_to_file(filename, dict_to_json(knowledge_dict))    
+
 
 def listPrint(thelist):
 	for i in thelist:
