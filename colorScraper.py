@@ -13,6 +13,7 @@ def getURL(url):
 
 def scrapeData():
 	#define a url to scrap from
+	# another one to scrape from http://www.color-hex.com/color-names.html
 	url = 'http://www.colorhexa.com/color-names'
 	#define a 
 	soup = BeautifulSoup(getURL(url))
@@ -33,12 +34,12 @@ def scrapeData():
 			names.append(data[1])
 	
 	#print names
-	print hexs
+	#print hexs
 
 	# LOOP AND BUILD A DICT
 	output = {}
-	for index in range(len(hexs)):
-		output[hexs[index]] = names[index]
+	for index in range(len(names)):
+		output[names[index]] = hexs[index]
 	#SAVE DICT AS JSON
 	save_as_json(output,'hex-human-colors.txt')
 
